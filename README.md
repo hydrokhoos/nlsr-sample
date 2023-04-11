@@ -2,7 +2,7 @@
 
 [GitHub - hydrokhoos/nlsr-sample](https://github.com/hydrokhoos/nlsr-sample)
 
-![nlsr-sample-topology.png](nlsr-sample%20340934284b8d429d90d50d48d67414e5/nlsr-sample-topology.png)
+![nlsr-sample-topology.png](nlsr-sample-topology.png)
 
 ## 上の図のネットワークを作る
 
