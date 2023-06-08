@@ -1,7 +1,5 @@
 # nlsr-sample
 
-[GitHub - hydrokhoos/nlsr-sample](https://github.com/hydrokhoos/nlsr-sample)
-
 ![nlsr-sample-topology.png](nlsr-sample-topology.png)
 
 ## 上の図のネットワークを作る
@@ -12,49 +10,16 @@
 cd nlsr-sample
 ```
 
-Dockerコンテナを起動する
+コンテナを起動する
 
 ```bash
-docker run -dit --name router1 --privileged -p 172.16.232.73:63631:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-docker run -dit --name router2 --privileged -p 172.16.232.73:63632:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-docker run -dit --name router3 --privileged -p 172.16.232.73:63633:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-docker run -dit --name router4 --privileged -p 172.16.232.73:63634:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-docker run -dit --name producer --privileged -p 172.16.232.73:63635:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-docker run -dit --name consumer --privileged -p 172.16.232.73:63636:6363/udp -v $(pwd):/src/ hydrokhoos/ndn-all:arm
-```
-
-各コンテナでNFDを起動する
-
-```bash
-docker exec -it router1 bash
-nfd-start
-exit
-...
-```
-
-各コンテナで隣接ノードへのFaceを作成する
-
-```bash
-docker exec -it router1 bash
-nfdc face create udp4://172.16.232.73:63632
-nfdc face create udp4://172.16.232.73:63633
-nfdc face create udp4://172.16.232.73:63635
-exit
-...
-```
-
-各コンテナでNLSRを起動する (別窓かデタッチ)
-
-```bash
-docker exec -it router1 bash
-nlsr -f /src/nlsr-router1.conf
+./create.sh
 ```
 
 NLSRの状態の確認　routing tableができていればOK
 
 ```bash
-docker exec -it router1 bash
-nlsrc status
+docker exec producer nlsrc status
 ```
 
 ## ProducerからConsumerにコンテンツを配信する
@@ -85,4 +50,10 @@ ndnputchunks /sample.txt < sample.txt
 ```bash
 docker exec -it consumer bash
 ndncatchunks /sample.txt
+```
+
+## コンテナを削除する
+
+```bash
+./delete.sh
 ```
